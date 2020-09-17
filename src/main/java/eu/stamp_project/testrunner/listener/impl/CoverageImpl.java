@@ -71,6 +71,26 @@ public class CoverageImpl implements Coverage, Serializable {
                 ).collect(Collectors.toList());
     }
 
+    public static String getCoverageInformationPerMethod(IClassCoverage coverage,
+                                                         Function<ICounter, Integer> counterGetter) {
+        StringBuilder builder = new StringBuilder();
+        coverage.getMethods()
+                .stream()
+                .filter(iMethodCoverage -> !"<clinit>".equals(iMethodCoverage.getName()))
+                .forEach(iMethodCoverage -> {
+                    builder.append(iMethodCoverage.getName()).append("+");
+                    builder.append(IntStream.range(iMethodCoverage.getFirstLine(), iMethodCoverage.getLastLine() + 1)
+                            .mapToObj(iMethodCoverage::getLine)
+                            .map(ILine::getInstructionCounter)
+                            .map(counterGetter)
+                            .map(Object::toString)
+                            .collect(Collectors.joining(",")));
+                    builder.append("|");
+                });
+        builder.replace(builder.length()-1, builder.length(),"");
+        return builder.toString();
+    }
+
     @Override
     public boolean isBetterThan(Coverage that) {
         if (that == null) {
@@ -97,11 +117,8 @@ public class CoverageImpl implements Coverage, Serializable {
                     CoverageImpl.getListOfCountForCounterFunction(coverage, ICounter::getCoveredCount);
             builderExecutionPath.append(coverage.getName())
                     .append(":")
-                    .append(listOfCountForCounterFunction
-                            .stream()
-                            .map(Objects::toString)
-                            .collect(Collectors.joining(","))
-                    ).append(";");
+                    .append(getCoverageInformationPerMethod(coverage,  ICounter::getCoveredCount))
+                    .append(";");
             counter[0] += listOfCountForCounterFunction.stream()
                     .mapToInt(Integer::intValue)
                     .sum();
