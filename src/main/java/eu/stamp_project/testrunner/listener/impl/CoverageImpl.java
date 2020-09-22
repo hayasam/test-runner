@@ -120,7 +120,7 @@ public class CoverageImpl implements Coverage, Serializable {
             builderExecutionPath.append(coverage.getName())
                     .append(":")
                     .append(getCoverageInformationPerMethod(coverage,  ICounter::getCoveredCount))
-                    .append(";");
+                    .append("-");
             counter[0] += listOfCountForCounterFunction.stream()
                     .mapToInt(Integer::intValue)
                     .sum();
