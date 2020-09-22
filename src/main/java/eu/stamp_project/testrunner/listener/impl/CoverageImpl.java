@@ -87,7 +87,9 @@ public class CoverageImpl implements Coverage, Serializable {
                             .collect(Collectors.joining(",")));
                     builder.append("|");
                 });
-        builder.replace(builder.length()-1, builder.length(),"");
+        if (builder.length() > 0) {
+            builder.replace(builder.length()-1, builder.length(),"");
+        }
         return builder.toString();
     }
 
