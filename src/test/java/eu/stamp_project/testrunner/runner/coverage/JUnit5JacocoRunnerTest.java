@@ -36,7 +36,12 @@ public class JUnit5JacocoRunnerTest extends AbstractTest {
         assertEquals(expectedExecutionPath , load.getExecutionPath());
     }
 
-    private static final String expectedExecutionPath = "tobemocked/LoginDao:<init>+0|login+0;tobemocked/LoginController:<init>+0|login+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;tobemocked/LoginService:<init>+0|login+0,0,0,0,0,0,0,0,0|setCurrentUser+0,0,0,0|setLoginDao+0,0;example/Example:charAt+2,0,0,4,4,0,7|<init>+2,0,2,5,1,0,3;tobemocked/UserForm:<init>+0|getUsername+0;";
+    private static final String expectedExecutionPath = "tobemocked/LoginDao:<init>+()V+0|login+" +
+            "(Ltobemocked/UserForm;)I+0;tobemocked/LoginController:<init>+()V+0|login+(Ltobemocked/UserForm;)" +
+            "Ljava/lang/String;+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;tobemocked/LoginService:<init>+()V+0|login+" +
+            "(Ltobemocked/UserForm;)Z+0,0,0,0,0,0,0,0,0|setCurrentUser+(Ljava/lang/String;)V+0,0,0,0|setLoginDao+" +
+            "(Ltobemocked/LoginDao;)V+0,0;example/Example:charAt+(Ljava/lang/String;I)C+2,0,0,4,4,0,7|<init>+()V+2,0," +
+            "2,5,1,0,3;tobemocked/UserForm:<init>+()V+0|getUsername+()Ljava/lang/String;+0;";
 
     @Test
     public void testWithoutNewJvmOnTestCases() throws Exception {

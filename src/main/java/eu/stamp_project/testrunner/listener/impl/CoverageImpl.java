@@ -8,7 +8,6 @@ import org.jacoco.core.data.ExecutionDataStore;
 
 import java.io.*;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -79,6 +78,7 @@ public class CoverageImpl implements Coverage, Serializable {
                 .filter(iMethodCoverage -> !"<clinit>".equals(iMethodCoverage.getName()))
                 .forEach(iMethodCoverage -> {
                     builder.append(iMethodCoverage.getName()).append("+");
+                    builder.append(iMethodCoverage.getDesc()).append("+");
                     builder.append(IntStream.range(iMethodCoverage.getFirstLine(), iMethodCoverage.getLastLine() + 1)
                             .mapToObj(iMethodCoverage::getLine)
                             .map(ILine::getInstructionCounter)
