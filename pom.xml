@@ -85,7 +85,7 @@
         <dependency>
             <groupId>org.pitest</groupId>
             <artifactId>pitest-entry</artifactId>
-            <version>1.4.7</version>
+            <version>1.11.4</version>
         </dependency>
 
         <dependency>
